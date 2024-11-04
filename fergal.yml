@@ -1,4 +1,4 @@
---- update
+--- 
 - name: Collect set of facts in PowerScale
   hosts: localhost
   connection: local
