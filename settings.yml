@@ -1,0 +1,67 @@
+---
+- name: Manage Setting Operations on PowerScale
+  hosts: localhost
+  connection: local
+  vars:
+    onefs_host: '10.**.**.242'
+    verify_ssl: false
+    api_user: '***'
+    api_password: '***'
+    state_present: 'present'
+    state_absent: 'absent'
+    mail_relay: 'mailrelay.itp11.dell.com'
+    mail_sender: 'lab-a21@dell.com'
+    mail_subject: 'alerts11'
+    ntp_servers_add:
+      - '10.**.**.21'
+      - '10.**.**.22'
+      - '10.**.**.23'
+    ntp_servers_remove:
+      - '10.**.**.29'
+    ntp_server_id: "10.10.230.21"
+
+  tasks:
+    - name: Update cluster settings
+      dellemc.powerscale.settings:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        state: "{{ state_present }}"
+        ntp_servers: "{{ ntp_servers_add }}"
+        mail_relay: "{{ mail_relay }}"
+        mail_sender: "{{ mail_sender }}"
+        mail_subject: "{{ mail_subject }}"
+        name: "PIE-IsilonS-24241-Cluster"
+        description: "This is new description for the cluster"
+        logon_details:
+          message_title: "This is the new title"
+          description: "This is new description"
+        company: "Test company"
+        location: "Test location"
+        primary_contact:
+          name: "primary_name11"
+          phone1: "primary_phone11"
+          phone2: "primary_phone21"
+          email: "primary_email1@email.com"
+        secondary_contact:
+          name: "secondary_name11"
+          phone1: "secondary_phone11"
+          phone2: "secondary_phone21"
+          email: "secondary_email1@email.com"
+
+    - name: Get cluster settings
+      dellemc.powerscale.settings:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+
+    - name: Remove NTP server
+      dellemc.powerscale.settings:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        ntp_servers: "{{ ntp_servers_remove }}"
+        state: "{{ state_absent }}"

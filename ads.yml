@@ -1,0 +1,275 @@
+---
+- name: ADS Operations on PowerScale
+  hosts: localhost
+  connection: local
+  vars:
+    onefs_host: '10.**.**.**'
+    verify_ssl: false
+    api_user: 'user'
+    api_password: 'password'
+    domain_name: 'ansibleneo.com'
+    instance_name: 'ansibleneo.com'
+    state_present: 'present'
+    state_absent: 'absent'
+
+  tasks:
+    - name: Add an Active Directory provider
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        domain_name: "{{ domain_name }}"
+        instance_name: "{{ instance_name }}"
+        ads_user: "administrator"
+        ads_password: "Password"
+        ads_parameters:
+          groupnet: "groupnet_ad"
+          home_directory_template: "/ifs/home/%D/%U"
+          login_shell: "/bin/zsh"
+          machine_account: "test_account"
+          organizational_unit: "unit"
+          allocate_gids: true
+          allocate_uids: false
+          assume_default_domain: false
+          authentication: true
+          create_home_directory: true
+          domain_offline_alerts: true
+          ignore_all_trusts: true
+          ignored_trusted_domains:
+            - "example.com"
+            - "example1.com"
+          include_trusted_domains:
+            - "trusted.com"
+          ldap_sign_and_seal: true
+          lookup_groups: true
+          lookup_normalize_groups: true
+          lookup_normalize_users: true
+          lookup_users: true
+          machine_password_changes: true
+          nss_enumeration: true
+          restrict_findable: true
+          store_sfu_mappings: true
+          check_online_interval: 7600
+          machine_password_lifespan: 400
+          rpc_call_timeout: 45
+          server_retry_limit: 789
+          sfu_support: "rfc2307"
+          extra_expected_spns:
+            - span
+          findable_groups:
+            - "groupone"
+          findable_users:
+            - "userone"
+          lookup_domains:
+            - "example.com"
+          unfindable_groups:
+            - "nogroups"
+          unfindable_users:
+            - "nouser"
+        state: "{{ state_present }}"
+
+    - name: Add an Active Directory provider Idempotency case
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        domain_name: "{{ domain_name }}"
+        instance_name: "{{ instance_name }}"
+        ads_user: "administrator"
+        ads_password: "Password"
+        ads_parameters:
+          groupnet: "groupnet_ad"
+          home_directory_template: "/ifs/home/%D/%U"
+          login_shell: "/bin/zsh"
+          machine_account: "test_account"
+          organizational_unit: "unit"
+          allocate_gids: true
+          allocate_uids: false
+          assume_default_domain: false
+          authentication: true
+          create_home_directory: true
+          domain_offline_alerts: true
+          ignore_all_trusts: true
+          ignored_trusted_domains:
+            - "example.com"
+            - "example1.com"
+          include_trusted_domains:
+            - "trusted.com"
+          ldap_sign_and_seal: true
+          lookup_groups: true
+          lookup_normalize_groups: true
+          lookup_normalize_users: true
+          lookup_users: true
+          machine_password_changes: true
+          nss_enumeration: true
+          restrict_findable: true
+          store_sfu_mappings: true
+          check_online_interval: 7600
+          machine_password_lifespan: 400
+          rpc_call_timeout: 45
+          server_retry_limit: 789
+          sfu_support: "rfc2307"
+          extra_expected_spns:
+            - span
+          findable_groups:
+            - "groupone"
+          findable_users:
+            - "userone"
+          lookup_domains:
+            - "example.com"
+          unfindable_groups:
+            - "nogroups"
+          unfindable_users:
+            - "nouser"
+        state: "{{ state_present }}"
+
+    - name: Modify an Active Directory provider with domain name
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        verify_ssl: "{{ verify_ssl }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        domain_name: "{{ domain_name }}"
+        ads_parameters:
+          allocate_uids: true
+          assume_default_domain: true
+          authentication: false
+          create_home_directory: false
+          domain_offline_alerts: false
+          ignored_trusted_domains:
+            - "example2.com"
+          include_trusted_domains:
+            - "trusted.com"
+          ldap_sign_and_seal: false
+          lookup_groups: false
+          lookup_normalize_users: false
+          machine_password_changes: false
+          store_sfu_mappings: false
+          check_online_interval: 7600
+          machine_password_lifespan: 234
+          rpc_call_timeout: 5
+          server_retry_limit: 10
+          sfu_support: "rfc2307"
+        state: "{{ state_present }}"
+
+    - name: Modify an Active Directory provider with domain name Idempotency case
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        verify_ssl: "{{ verify_ssl }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        domain_name: "{{ domain_name }}"
+        ads_parameters:
+          allocate_uids: true
+          assume_default_domain: true
+          authentication: false
+          create_home_directory: false
+          domain_offline_alerts: false
+          ignored_trusted_domains:
+            - "example2.com"
+          include_trusted_domains:
+            - "trusted.com"
+          ldap_sign_and_seal: false
+          lookup_groups: false
+          lookup_normalize_users: false
+          machine_password_changes: false
+          store_sfu_mappings: false
+          check_online_interval: 7600
+          machine_password_lifespan: 234
+          rpc_call_timeout: 5
+          server_retry_limit: 10
+          sfu_support: "rfc2307"
+        state: "{{ state_present }}"
+
+    - name: Modify an Active Directory provider with instance name
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        verify_ssl: "{{ verify_ssl }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        instance_name: "{{ instance_name }}"
+        ads_parameters:
+          home_directory_template: "/ifs/usr_home/%D/%U"
+          login_shell: "/bin/rbash"
+        state: "{{ state_present }}"
+
+    - name: Add an SPN
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        domain_name: "{{ domain_name }}"
+        spns:
+          - spn: "HOST/test1"
+        state: "{{ state_present }}"
+
+    - name: Remove an SPN
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        domain_name: "{{ domain_name }}"
+        spns:
+          - spn: "HOST/test1"
+            state: "absent"
+        state: "{{ state_present }}"
+
+    - name: Check an SPN
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        domain_name: "{{ domain_name }}"
+        spn_command: "check"
+        state: "{{ state_present }}"
+
+    - name: Fix an SPN
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        domain_name: "{{ domain_name }}"
+        spn_command: "fix"
+        state: "{{ state_present }}"
+
+    - name: Get Active Directory provider details with domain name
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        domain_name: "{{ domain_name }}"
+        state: "{{ state_present }}"
+
+    - name: Get Active Directory provider details with instance name
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        verify_ssl: "{{ verify_ssl }}"
+        instance_name: "{{ instance_name }}"
+        state: "{{ state_present }}"
+
+    - name: Delete an Active Directory provider with domain name
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        verify_ssl: "{{ verify_ssl }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        domain_name: "{{ domain_name }}"
+        state: "{{ state_absent }}"
+
+    - name: Delete an Active Directory provider with instance name
+      dellemc.powerscale.ads:
+        onefs_host: "{{ onefs_host }}"
+        verify_ssl: "{{ verify_ssl }}"
+        api_user: "{{ api_user }}"
+        api_password: "{{ api_password }}"
+        instance_name: "{{ instance_name }}"
+        state: "{{ state_absent }}"
