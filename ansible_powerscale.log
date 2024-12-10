@@ -2,3 +2,7 @@
 2024-11-04 07:00:53,614 info.py INFO : Got Attributes of PowerScale cluster 192.168.1.150
 2024-11-04 07:00:53,743 info.py INFO : Got Access zones from PowerScale cluster 192.168.1.150
 2024-11-04 07:00:54,249 info.py INFO : Got Nodes from PowerScale cluster  192.168.1.150
+2024-12-10 10:24:52,785 info.py INFO : Got python SDK instance for provisioning on PowerScale 
+2024-12-10 10:24:53,235 info.py INFO : Got Attributes of PowerScale cluster 192.168.1.150
+2024-12-10 10:24:53,352 info.py INFO : Got Access zones from PowerScale cluster 192.168.1.150
+2024-12-10 10:24:53,825 info.py INFO : Got Nodes from PowerScale cluster  192.168.1.150
