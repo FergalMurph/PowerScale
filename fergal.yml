@@ -1,5 +1,5 @@
 --- 
-- name: Collect set of facts in PowerScale
+- name: Collect set of facts in PowerScales
   hosts: localhost
   connection: local
   vars:
